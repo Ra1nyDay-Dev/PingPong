@@ -82,7 +82,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -104,7 +104,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fc3229c920f6c1f409d860cba7890dbc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d790d22629f4666bbcf3d679528a22b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PingPong.Scripts.Scenes.Gameplay.Paddle.PaddleID
-  <PlayerId>k__BackingField: 0
+  PlayerId: 0
 --- !u!114 &2966786658178518694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +192,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e955620de968d4dbb6404271a406f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PingPong.Scripts.Paddle.PaddleMovement
-  _speed: 15
-  _inputType: 0
-  _maxY: 4.7

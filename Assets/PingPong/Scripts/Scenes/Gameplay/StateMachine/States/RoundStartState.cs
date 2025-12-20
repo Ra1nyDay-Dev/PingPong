@@ -40,7 +40,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
                     : settings.Player2PaddleStartPosition;
             }
 
-            var isFirstRound = scoreCounter.ScorePlayer1 == 0 && scoreCounter.ScorePlayer1 == 0;
+            var isFirstRound = scoreCounter.ScorePlayer1 == 0 && scoreCounter.ScorePlayer2 == 0;
             var countdownTime = isFirstRound ? settings.FirstRoundCountdownTime : settings.RoundCountdownTime;
             
             coroutineRunner.StartCoroutine(RoundCountdown(countdownTime, stateMachine));

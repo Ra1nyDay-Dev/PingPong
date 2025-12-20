@@ -57,6 +57,8 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
             ball.GetComponent<BallMovement>().Construct
             ( 
                 launchSpeed: settings.BallLaunchSpeed,
+                maxSpeed: settings.BallMaxSpeed,
+                speedIncreasePerHit: settings.BallSpeedIncreasePerHit,
                 maxLaunchAngle: settings.BallMaxLaunchAngle
             );
         }
