@@ -1,7 +1,4 @@
-﻿using System;
-using PingPong.Scripts.Global.Data;
-using PingPong.Scripts.Scenes.Gameplay.Data;
-using UnityEngine;
+﻿using PingPong.Scripts.Global.Data;
 
 namespace PingPong.Scripts.Global.Services.Input
 {

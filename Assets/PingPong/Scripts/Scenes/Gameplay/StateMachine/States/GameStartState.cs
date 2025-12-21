@@ -1,7 +1,6 @@
 ﻿using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.Input;
-using PingPong.Scripts.Global.UI;
 using PingPong.Scripts.Scenes.Gameplay.Ball;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
 using PingPong.Scripts.Scenes.Gameplay.Services.ScoreCounter;
@@ -16,12 +15,21 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         private const string LEVEL_SETTINGS = "StaticData/Gameplay/GameplayLevelSettings";
         private const string PADDLE_PREFAB = "Gameplay/Paddle/Paddle";
         private const string BALL_PREFAB = "Gameplay/Ball/Ball";
+        
+        private GameVersusMode _currentGameVersusMode;
+        private GameplayLevelSettings _settings;
+        private GameObject _ballPrefab;
+        private IGameplayStateMachine _stateMachine;
+        private GameObject _paddlePrefab;
+        private IInputService _player1InputService;
+        private IInputService _player2InputService;
+        private GameObject _ball;
 
         public void Enter()
         {
             PrepareLevel();
             ResetScore();
-            SceneServices.Container.Get<IGameplayStateMachine>().Enter<RoundStartState>();
+            _stateMachine.Enter<RoundStartState>();
         }
 
         public void Exit()
@@ -30,36 +38,80 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 
         private void PrepareLevel()
         {
-            GameplayLevelSettings settings = Resources.Load<GameplayLevelSettings>(LEVEL_SETTINGS);
-            GameObject paddlePrefab = Resources.Load<GameObject>(PADDLE_PREFAB);
-            GameObject ballPrefab = Resources.Load<GameObject>(BALL_PREFAB);
+            GetStateDependencies();
+            CreateBall();
+            CreatePaddles();
+        }
+
+        private void GetStateDependencies()
+        {
+            _currentGameVersusMode =  GameVersusMode.AIvsAI;
+            _settings = Resources.Load<GameplayLevelSettings>(LEVEL_SETTINGS);
+            _ballPrefab = Resources.Load<GameObject>(BALL_PREFAB);
+            _paddlePrefab = Resources.Load<GameObject>(PADDLE_PREFAB);
+            _stateMachine = SceneServices.Container.Get<IGameplayStateMachine>();
+            _player1InputService = ProjectServices.Container.Get<IInputService>($"{PlayerId.Player1}");
+            _player2InputService = ProjectServices.Container.Get<IInputService>($"{PlayerId.Player2}");
+        }
+
+        private void CreatePaddles()
+        {
+            switch (_currentGameVersusMode)
+            {
+                case GameVersusMode.PlayerVsAI:
+                {
+                    CreatePlayerPaddle(PlayerId.Player1, _player2InputService);
+                    CreateAIPaddle(PlayerId.Player2);
+                    break;
+                }
+                case GameVersusMode.PlayerVsPlayer:
+                {
+                    CreatePlayerPaddle(PlayerId.Player1, _player1InputService);
+                    CreatePlayerPaddle(PlayerId.Player2, _player2InputService);
+                    break;
+                }
+                case GameVersusMode.AIvsAI:
+                {
+                    CreateAIPaddle(PlayerId.Player1);
+                    CreateAIPaddle(PlayerId.Player2);
+                    break;
+                }
+            }
+        }
+
+        private void CreatePlayerPaddle( PlayerId playerId, IInputService inputService )
+        {
+            var paddle = CreatePaddle(playerId);
+            var paddleContolls = new PlayerPaddleControlls(inputService);
+            paddle.GetComponent<PaddleMovement>().Construct(_settings.PaddleSpeed, _settings.LevelBoundsY, paddleContolls);
+        }
+        
+        private void CreateAIPaddle(PlayerId playerId)
+        {
+            var paddle = CreatePaddle(playerId);
+            var paddleContolls = new AIPaddleControlls(_ball, paddle.transform, _settings.LevelBoundsY);
+            paddle.GetComponent<PaddleMovement>().Construct(_settings.PaddleSpeed, _settings.LevelBoundsY, paddleContolls);
+        }
+        
+
+        private GameObject CreatePaddle(PlayerId playerId)
+        {
+            Vector3 position = playerId == PlayerId.Player1 ? _settings.Player1PaddleStartPosition : _settings.Player2PaddleStartPosition;
+            GameObject paddle = Object.Instantiate(_paddlePrefab, position, Quaternion.identity);
+            paddle.GetComponent<PaddleID>().PlayerId = playerId;
             
-            CreatePaddle(paddlePrefab, settings, PlayerId.Player1, PaddleInputType.Player1);
-            CreatePaddle(paddlePrefab, settings, PlayerId.Player2, PaddleInputType.Player2);
-            CreateBall(ballPrefab, settings);
+            return paddle;
         }
 
-
-        private static GameObject CreatePaddle(GameObject paddlePrefab,GameplayLevelSettings settings, PlayerId playerId, PaddleInputType inputType)
+        private void CreateBall()
         {
-            Vector3 position = playerId == PlayerId.Player1 ? settings.Player1PaddleStartPosition : settings.Player2PaddleStartPosition;
-            IInputService inputService = ProjectServices.Container.Get<IInputService>($"{inputType}");
-            GameObject playerPaddle = Object.Instantiate(paddlePrefab, position, Quaternion.identity) as GameObject;
-            playerPaddle.GetComponent<PaddleID>().PlayerId = playerId;
-            playerPaddle.GetComponent<PaddleMovement>().Construct(settings.PaddleSpeed, inputType, settings.LevelBoundsY, inputService);
-
-            return playerPaddle;
-        }
-
-        private static void CreateBall(GameObject ballPrefab, GameplayLevelSettings settings)
-        {
-            GameObject ball = Object.Instantiate(ballPrefab, settings.BallStartPosition, Quaternion.identity);
-            ball.GetComponent<BallMovement>().Construct
+            _ball = Object.Instantiate(_ballPrefab, _settings.BallStartPosition, Quaternion.identity);
+            _ball.GetComponent<BallMovement>().Construct
             ( 
-                launchSpeed: settings.BallLaunchSpeed,
-                maxSpeed: settings.BallMaxSpeed,
-                speedIncreasePerHit: settings.BallSpeedIncreasePerHit,
-                maxLaunchAngle: settings.BallMaxLaunchAngle
+                launchSpeed: _settings.BallLaunchSpeed,
+                maxSpeed: _settings.BallMaxSpeed,
+                speedIncreasePerHit: _settings.BallSpeedIncreasePerHit,
+                maxLaunchAngle: _settings.BallMaxLaunchAngle
             );
         }
 

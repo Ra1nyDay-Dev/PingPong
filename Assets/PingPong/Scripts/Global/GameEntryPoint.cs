@@ -1,11 +1,9 @@
-using System;
 using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
 using PingPong.Scripts.Global.Services.Input;
 using PingPong.Scripts.Global.Services.SceneLoader;
 using PingPong.Scripts.Global.UI;
-using PingPong.Scripts.Scenes.Gameplay.Data;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -51,8 +49,8 @@ namespace PingPong.Scripts.Global
         private void RegisterProjectServices()
         {
             ProjectServices.Container.Register<ISceneLoader>(_sceneLoader);
-            ProjectServices.Container.Register<IInputService>($"{PaddleInputType.Player1}", new UnityPlayerInput(PlayerId.Player1));
-            ProjectServices.Container.Register<IInputService>($"{PaddleInputType.Player2}", new UnityPlayerInput(PlayerId.Player2));
+            ProjectServices.Container.Register<IInputService>($"{PlayerId.Player1}", new UnityPlayerInput(PlayerId.Player1));
+            ProjectServices.Container.Register<IInputService>($"{PlayerId.Player2}", new UnityPlayerInput(PlayerId.Player2));
             ProjectServices.Container.Register<ICoroutineRunner>(_coroutineRunner);
         }
     }

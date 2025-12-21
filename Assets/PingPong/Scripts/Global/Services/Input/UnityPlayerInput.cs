@@ -1,5 +1,4 @@
 ﻿using PingPong.Scripts.Global.Data;
-using PingPong.Scripts.Scenes.Gameplay.Data;
 
 namespace PingPong.Scripts.Global.Services.Input
 {
