@@ -12,7 +12,7 @@ namespace PingPong.Scripts.Global
     public class GameEntryPoint
     {
         private const string FIRST_SCENE = Data.Scenes.GAMEPLAY;
-        private const string UI_ROOT_PATH = "UI/Root/UIRoot";
+        private const string UI_ROOT_PATH = "Root/UI/UIRoot";
 
         private static GameEntryPoint _instance;
         private ISceneLoader _sceneLoader;

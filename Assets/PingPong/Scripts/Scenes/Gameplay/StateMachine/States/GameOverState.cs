@@ -7,7 +7,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 {
     public class GameOverState : IGameplayState
     {
-        private const string LEVEL_SETTINGS = "StaticData/Gameplay/GameplayLevelSettings";
+        private const string LEVEL_SETTINGS = "Gameplay/StaticData/GameplayLevelSettings";
         
         public void Enter()
         {
