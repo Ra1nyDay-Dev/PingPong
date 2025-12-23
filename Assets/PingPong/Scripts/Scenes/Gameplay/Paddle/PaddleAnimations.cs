@@ -24,7 +24,6 @@ namespace PingPong.Scripts.Scenes.Gameplay.Paddle
                 {
                     Color color = _paddleLightColors[Random.Range(0, _paddleLightColors.Length)];
                     _paddleLight.color = new Color(color.r, color.g, color.b, 1f);
-                    // _paddleLight.color = Color.white;
                     _animator.SetTrigger("BallHit");
                 }
             }

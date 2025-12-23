@@ -48,8 +48,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 2
   m_FalloffIntensity: 0.791
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Color: {r: 1, g: 0.5797377, b: 0, a: 1}
+  m_Intensity: 5
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 132.20424
   m_PointLightOuterAngle: 333.13422
   m_PointLightInnerRadius: 0.1
-  m_PointLightOuterRadius: 5
+  m_PointLightOuterRadius: 7
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -286,10 +286,6 @@ MonoBehaviour:
   _paddleLight: {fileID: 8196527685977692718}
   _paddleLightColors:
   - {r: 1, g: 0.8666667, b: 0.0627451, a: 0}
-  - {r: 0.062745094, g: 0.6437277, b: 1, a: 0}
-  - {r: 0.062745094, g: 1, b: 0.10440679, a: 0}
-  - {r: 1, g: 0.24242005, b: 0, a: 0}
-  - {r: 0.9433962, g: 0.17354932, b: 0.93373877, a: 0}
 --- !u!95 &5606008734551789288
 Animator:
   serializedVersion: 7
@@ -392,7 +388,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: ec4764213ec073e479218e9dba4f0315, type: 3}
-  m_Color: {r: 1, g: 0.8666667, b: 0.0627451, a: 0.39215687}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.39215687}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

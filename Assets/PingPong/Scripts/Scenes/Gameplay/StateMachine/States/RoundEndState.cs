@@ -3,6 +3,7 @@ using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
 using PingPong.Scripts.Scenes.Gameplay.Ball;
+using PingPong.Scripts.Scenes.Gameplay.Camera;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
 using PingPong.Scripts.Scenes.Gameplay.Services.LightController;
 using PingPong.Scripts.Scenes.Gameplay.Services.RoundTimer;
@@ -24,6 +25,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         private ILightController _lightController;
         private ICoroutineRunner _coroutineRunner;
         private GameObject[] _paddles;
+        private UnityEngine.Camera _camera;
 
         public void Enter(PlayerId playerLosed)
         {
@@ -32,6 +34,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
             _roundTimer.StopTimer();
             _ball.GetComponent<BallMovement>().StopBall();
             DisableMovement();
+            _camera.GetComponent<CameraShake>().Shake(0.5f, magnitude: 0.2f);
             _coroutineRunner.StartCoroutine(HighlightGates(playerLosed, 1.5f));
         }
 
@@ -50,6 +53,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
             _lightController = SceneServices.Container.Get<ILightController>();
             _coroutineRunner = ProjectServices.Container.Get<ICoroutineRunner>();
             _paddles = GameObject.FindGameObjectsWithTag("Paddle");
+            _camera = UnityEngine.Camera.main;
         }
         
         private void DisableMovement()

@@ -1,4 +1,4 @@
-using System;
+using PingPong.Scripts.Scenes.Gameplay.Camera;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
