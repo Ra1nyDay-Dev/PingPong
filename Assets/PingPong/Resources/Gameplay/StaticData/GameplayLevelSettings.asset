@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84acbd94ad9e4c43bd997a4dfe7b8689, type: 3}
   m_Name: GameplayLevelSettings
   m_EditorClassIdentifier: Assembly-CSharp::PingPong.Scripts.Scenes.Gameplay.StaticData.GameplayLevelSettings
-  Player1PaddleStartPosition: {x: -8, y: 0, z: 0}
-  Player2PaddleStartPosition: {x: 8, y: 0, z: 0}
+  Player1PaddleStartPosition: {x: -8, y: 0, z: -1}
+  Player1PaddleRotation: {x: 0, y: 0, z: -90}
+  Player2PaddleStartPosition: {x: 8, y: 0, z: -1}
+  Player2PaddleRotation: {x: 0, y: 0, z: 90}
+  BallStartPosition: {x: 0, y: 0, z: -1}
   PaddleSpeed: 15
-  BallStartPosition: {x: 0, y: 0, z: 0}
   BallLaunchSpeed: 7
   BallMaxSpeed: 20
   BallSpeedIncreasePerHit: 1

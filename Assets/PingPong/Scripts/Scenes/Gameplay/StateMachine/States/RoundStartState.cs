@@ -4,6 +4,7 @@ using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
 using PingPong.Scripts.Scenes.Gameplay.Ball;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
+using PingPong.Scripts.Scenes.Gameplay.Services.LightController;
 using PingPong.Scripts.Scenes.Gameplay.Services.RoundTimer;
 using PingPong.Scripts.Scenes.Gameplay.Services.ScoreCounter;
 using PingPong.Scripts.Scenes.Gameplay.StaticData;
@@ -24,6 +25,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         private IGameplayStateMachine _stateMachine;
         private IScoreCounter _scoreCounter;
         private IRoundTimer _roundTimer;
+        private ILightController _lightController;
 
         public void Enter()
         {
@@ -31,6 +33,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
             ResetPositions();
             DisableObjects();
             _roundTimer.Reset();
+            _lightController.ResetLights();
             StartRoundCountdown();
         }
 
@@ -50,7 +53,8 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
             _coroutineRunner = ProjectServices.Container.Get<ICoroutineRunner>();
             _stateMachine = SceneServices.Container.Get<IGameplayStateMachine>();
             _scoreCounter = SceneServices.Container.Get<IScoreCounter>(); 
-            _roundTimer = SceneServices.Container.Get<IRoundTimer>(); 
+            _roundTimer = SceneServices.Container.Get<IRoundTimer>();
+            _lightController = SceneServices.Container.Get<ILightController>();
         }
 
         private void ResetPositions()

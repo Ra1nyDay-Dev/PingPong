@@ -5,9 +5,11 @@ namespace PingPong.Scripts.Scenes.Gameplay.StaticData
     [CreateAssetMenu(fileName = "GameplayLevelSettings", menuName = "Game/Level Settings")]
     public class GameplayLevelSettings : ScriptableObject
     {
-        public Vector3 Player1PaddleStartPosition = new Vector3(-8, 0, 0);
-        public Vector3 Player2PaddleStartPosition = new Vector3(8, 0, 0);
-        public Vector3 BallStartPosition = Vector3.zero;
+        public Vector3 Player1PaddleStartPosition = new Vector3(-8, 0, -1);
+        public Vector3 Player1PaddleRotation = new Vector3(0, 0, -90);
+        public Vector3 Player2PaddleStartPosition = new Vector3(8, 0, -1);
+        public Vector3 Player2PaddleRotation = new Vector3(0, 0, 90);
+        public Vector3 BallStartPosition = new Vector3(0,0,-1);
         public float PaddleSpeed = 15f;
         public float BallLaunchSpeed = 7f;
         public float BallMaxSpeed = 20f;

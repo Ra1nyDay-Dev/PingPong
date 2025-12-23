@@ -24,7 +24,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.Paddle
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _paddleHalfHeight = GetComponent<BoxCollider2D>().bounds.extents.y;
+            _paddleHalfHeight = GetComponent<CapsuleCollider2D>().bounds.extents.y;
         }
         
         private void Update() => 

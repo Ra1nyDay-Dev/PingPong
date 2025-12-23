@@ -100,21 +100,22 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         private void CreatePlayerPaddle( PlayerId playerId, IInputService inputService )
         {
             var paddle = CreatePaddle(playerId);
-            var paddleContolls = new PlayerPaddleControlls(inputService);
-            paddle.GetComponent<PaddleMovement>().Construct(_settings.PaddleSpeed, _settings.LevelBoundsY, paddleContolls);
+            var paddleControlls = new PlayerPaddleControlls(inputService);
+            paddle.GetComponent<PaddleMovement>().Construct(_settings.PaddleSpeed, _settings.LevelBoundsY, paddleControlls);
         }
 
         private void CreateAIPaddle(PlayerId playerId)
         {
             var paddle = CreatePaddle(playerId);
-            var paddleContolls = new AIPaddleControlls(_ball, paddle.transform, _settings.LevelBoundsY);
-            paddle.GetComponent<PaddleMovement>().Construct(_settings.PaddleSpeed, _settings.LevelBoundsY, paddleContolls);
+            var paddleControlls = new AIPaddleControlls(_ball, paddle.transform, _settings.LevelBoundsY);
+            paddle.GetComponent<PaddleMovement>().Construct(_settings.PaddleSpeed, _settings.LevelBoundsY, paddleControlls);
         }
 
         private GameObject CreatePaddle(PlayerId playerId)
         {
             Vector3 position = playerId == PlayerId.Player1 ? _settings.Player1PaddleStartPosition : _settings.Player2PaddleStartPosition;
-            GameObject paddle = Object.Instantiate(_paddlePrefab, position, Quaternion.identity);
+            Vector3 rotation = playerId == PlayerId.Player1 ? _settings.Player1PaddleRotation : _settings.Player2PaddleRotation;
+            GameObject paddle = Object.Instantiate(_paddlePrefab, position, Quaternion.Euler(rotation));
             paddle.GetComponent<PaddleID>().PlayerId = playerId;
             
             return paddle;
