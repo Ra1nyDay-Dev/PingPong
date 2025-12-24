@@ -1,3 +1,5 @@
+using System;
+using PingPong.Scripts.Scenes.Gameplay.StaticData;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -6,26 +8,30 @@ namespace PingPong.Scripts.Scenes.Gameplay.Paddle
     public class PaddleAnimations : MonoBehaviour
     {
         [SerializeField] private Light2D _paddleLight;
-        [SerializeField] private Color[] _paddleLightColors;
+        [SerializeField] private Gradient _paddleHitGradient;
         
         private Animator _animator;
+        private float _minBallSpeed;
+        private float _maxBallSpeed;
 
-        
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            
+            var settings = Resources.Load<GameplayLevelSettings>("Gameplay/StaticData/GameplayLevelSettings");
+            _minBallSpeed = settings.BallLaunchSpeed;
+            _maxBallSpeed = settings.BallMaxSpeed;
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.CompareTag("Ball"))
             {
-                if (_paddleLightColors.Length > 0)
-                {
-                    Color color = _paddleLightColors[Random.Range(0, _paddleLightColors.Length)];
-                    _paddleLight.color = new Color(color.r, color.g, color.b, 1f);
-                    _animator.SetTrigger("BallHit");
-                }
+                var ballSpeed = other.gameObject.GetComponent<Rigidbody2D>().linearVelocity.magnitude;
+                var speedNormalized = Mathf.Clamp01((ballSpeed - _minBallSpeed) / (_maxBallSpeed - _minBallSpeed));
+                var paddleHitColor = _paddleHitGradient.Evaluate(speedNormalized);
+                _paddleLight.color = paddleHitColor;
+                _animator.SetTrigger("BallHit");
             }
         }
     }
