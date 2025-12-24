@@ -641,6 +641,8 @@ MonoBehaviour:
   - {fileID: 2351041161511935312}
   - {fileID: 384517115229542677}
   _goalColor: {r: 1, g: 0, b: 0, a: 1}
+  _goalIntensity: 5
+  _goalOuterRadius: 12
 --- !u!1 &4748744171417950519
 GameObject:
   m_ObjectHideFlags: 0
