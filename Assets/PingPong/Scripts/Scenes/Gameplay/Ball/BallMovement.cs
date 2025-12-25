@@ -12,6 +12,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.Ball
         private float _maxLaunchAngle;
         
         private Rigidbody2D _rigidbody;
+        private BallAudio _ballAudio;
         
         private float _currentSpeed;
 
@@ -23,13 +24,17 @@ namespace PingPong.Scripts.Scenes.Gameplay.Ball
             _maxLaunchAngle = maxLaunchAngle;
         }
         
-        private void Awake() => 
+        private void Awake()
+        {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _ballAudio = GetComponent<BallAudio>();
+        }
 
         public void LaunchBall()
         {
             _currentSpeed = _launchSpeed;
             _rigidbody.linearVelocity = GetLaunchAngle() * _launchSpeed;
+            _ballAudio.PlayBallLaunch();
         }
 
         public void StopBall() => 

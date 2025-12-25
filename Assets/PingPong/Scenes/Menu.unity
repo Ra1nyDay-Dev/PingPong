@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed83de9b07be4794fa4b90c43b701493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuEntryPoint
-  _sceneUI: {fileID: 7685472945656271647, guid: e3db6470f4fd5954a8deda14d786fa0b, type: 3}
+  _sceneUIPrefab: {fileID: 7685472945656271647, guid: e3db6470f4fd5954a8deda14d786fa0b, type: 3}
 --- !u!4 &1561817772
 Transform:
   m_ObjectHideFlags: 0
