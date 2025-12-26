@@ -13,9 +13,9 @@ namespace PingPong.Scripts.Scenes.Gameplay
 {
     public class GameplayEntryPoint : SceneEntryPoint
     {
-        public override void Run(UIRootView uiRoot)
+        public override void Run(GameUI gameUI)
         {
-            base.Run(uiRoot);
+            base.Run(gameUI);
             RegisterSceneServices();
             StartGame();
         }

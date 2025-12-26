@@ -2,6 +2,7 @@
 using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
+using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Scenes.Gameplay.Ball;
 using PingPong.Scripts.Scenes.Gameplay.Camera;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
@@ -15,9 +16,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 {
     public class RoundEndState : IPayloadedGameplayState<PlayerId>
     {
-        private const string LEVEL_SETTINGS = "Gameplay/StaticData/GameplayLevelSettings";
-        
-        private GameplayLevelSettings _settings;
+        private LevelSettings _settings;
         private IScoreCounter _score;
         private GameObject _ball;
         private IGameplayStateMachine _stateMachine;
@@ -26,6 +25,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         private ICoroutineRunner _coroutineRunner;
         private GameObject[] _paddles;
         private UnityEngine.Camera _camera;
+        private IStaticDataService _staticDataService;
 
         public void Enter(PlayerId playerLosed)
         {
@@ -45,7 +45,8 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 
         private void GetStateDependencies()
         {
-            _settings = Resources.Load<GameplayLevelSettings>(LEVEL_SETTINGS);
+            _staticDataService = ProjectServices.Container.Get<IStaticDataService>();
+            _settings = _staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
             _score = SceneServices.Container.Get<IScoreCounter>();
             _ball = GameObject.FindWithTag("Ball");
             _stateMachine = SceneServices.Container.Get<IGameplayStateMachine>();

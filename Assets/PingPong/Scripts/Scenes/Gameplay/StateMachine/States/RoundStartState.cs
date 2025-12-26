@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using PingPong.Scripts.Global.AssetManagement;
 using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
+using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Scenes.Gameplay.Ball;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
 using PingPong.Scripts.Scenes.Gameplay.Services.LightController;
@@ -15,17 +17,16 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 {
     public class RoundStartState : IGameplayState
     {
-        private const string LEVEL_SETTINGS = "Gameplay/StaticData/GameplayLevelSettings";
-        
         private GameObject _ball;
         private GameObject[] _paddles;
-        private GameplayLevelSettings _settings;
+        private LevelSettings _settings;
         private IGameplayUI _gameplayUI;
         private ICoroutineRunner _coroutineRunner;
         private IGameplayStateMachine _stateMachine;
         private IScoreCounter _scoreCounter;
         private IRoundTimer _roundTimer;
         private ILightController _lightController;
+        private IStaticDataService _staticDataService;
 
         public void Enter()
         {
@@ -46,9 +47,10 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 
         private void GetStateDependencies()
         {
+            _staticDataService = ProjectServices.Container.Get<IStaticDataService>();
             _paddles = GameObject.FindGameObjectsWithTag("Paddle");
             _ball = GameObject.FindWithTag("Ball");
-            _settings = Resources.Load<GameplayLevelSettings>(LEVEL_SETTINGS);
+            _settings = _staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
             _gameplayUI = SceneServices.Container.Get<IGameplayUI>();
             _coroutineRunner = ProjectServices.Container.Get<ICoroutineRunner>();
             _stateMachine = SceneServices.Container.Get<IGameplayStateMachine>();

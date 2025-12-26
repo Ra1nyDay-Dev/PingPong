@@ -1,4 +1,6 @@
 ﻿using PingPong.Scripts.Global.Data;
+using PingPong.Scripts.Global.Services;
+using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
 using PingPong.Scripts.Scenes.Gameplay.StaticData;
 using UnityEngine;
@@ -7,12 +9,11 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 {
     public class GameOverState : IGameplayState
     {
-        private const string LEVEL_SETTINGS = "Gameplay/StaticData/GameplayLevelSettings";
-        
         public void Enter()
         {
             var paddles = GameObject.FindGameObjectsWithTag("Paddle");
-            var settings = Resources.Load<GameplayLevelSettings>(LEVEL_SETTINGS);
+            var staticDataService = ProjectServices.Container.Get<IStaticDataService>();
+            var settings = staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
             
             foreach (GameObject paddle in paddles)
             {

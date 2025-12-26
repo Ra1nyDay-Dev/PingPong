@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using PingPong.Scripts.Global.Services;
+using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Scenes.Gameplay.StaticData;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -30,7 +32,10 @@ namespace PingPong.Scripts.Scenes.Gameplay.Ball
             _trailRenderer = GetComponent<TrailRenderer>();
             _rigidbody = GetComponent<Rigidbody2D>();
             
-            var settings = Resources.Load<GameplayLevelSettings>("Gameplay/StaticData/GameplayLevelSettings");
+            var settings = ProjectServices.Container
+                .Get<IStaticDataService>()
+                .GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
+            
             _minBallSpeed = settings.BallLaunchSpeed;
             _maxBallSpeed = settings.BallMaxSpeed;
             _light = GetComponentInChildren<Light2D>();

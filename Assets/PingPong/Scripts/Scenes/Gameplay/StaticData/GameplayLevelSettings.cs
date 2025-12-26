@@ -2,8 +2,8 @@
 
 namespace PingPong.Scripts.Scenes.Gameplay.StaticData
 {
-    [CreateAssetMenu(fileName = "GameplayLevelSettings", menuName = "Game/Level Settings")]
-    public class GameplayLevelSettings : ScriptableObject
+    [CreateAssetMenu(fileName = "LevelSettings", menuName = "Game/Level Settings")]
+    public class LevelSettings : ScriptableObject
     {
         public Vector3 Player1PaddleStartPosition = new Vector3(-8, 0, -1);
         public Vector3 Player1PaddleRotation = new Vector3(0, 0, -90);

@@ -1,32 +1,29 @@
-﻿using PingPong.Scripts.Global.Data;
+﻿using PingPong.Scripts.Global.AssetManagement;
+using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.Input;
+using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Scenes.Gameplay.Ball;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
 using PingPong.Scripts.Scenes.Gameplay.Services.RoundTimer;
 using PingPong.Scripts.Scenes.Gameplay.Services.ScoreCounter;
 using PingPong.Scripts.Scenes.Gameplay.StaticData;
-using PingPong.Scripts.Scenes.Gameplay.UI;
 using UnityEngine;
 
 namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 {
     public class GameStartState : IGameplayState
     {
-        private const string LEVEL_SETTINGS = "Gameplay/StaticData/GameplayLevelSettings";
-        private const string PADDLE_PREFAB = "Gameplay/Paddle/Paddle";
-        private const string BALL_PREFAB = "Gameplay/Ball/Ball";
-        
         private GameVersusMode _currentGameVersusMode;
-        private GameplayLevelSettings _settings;
-        private GameObject _ballPrefab;
+        private LevelSettings _settings;
         private IGameplayStateMachine _stateMachine;
-        private GameObject _paddlePrefab;
         private IInputService _player1InputService;
         private IInputService _player2InputService;
         private GameObject _ball;
         private IRoundTimer _roundTimer;
         private IScoreCounter _scoreCounter;
+        private IStaticDataService _staticDataService;
+        private IAssetProvider _assetProvider;
 
         public void Enter()
         {
@@ -44,9 +41,9 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         private void GetStateDependencies()
         {
             _currentGameVersusMode =  GameVersusMode.PlayerVsAI;
-            _settings = Resources.Load<GameplayLevelSettings>(LEVEL_SETTINGS);
-            _ballPrefab = Resources.Load<GameObject>(BALL_PREFAB);
-            _paddlePrefab = Resources.Load<GameObject>(PADDLE_PREFAB);
+            _staticDataService = ProjectServices.Container.Get<IStaticDataService>();
+            _assetProvider = ProjectServices.Container.Get<IAssetProvider>();
+            _settings = _staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
             _stateMachine = SceneServices.Container.Get<IGameplayStateMachine>();
             _player1InputService = ProjectServices.Container.Get<IInputService>($"{PlayerId.Player1}");
             _player2InputService = ProjectServices.Container.Get<IInputService>($"{PlayerId.Player2}");
@@ -62,7 +59,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 
         private void CreateBall()
         {
-            _ball = Object.Instantiate(_ballPrefab, _settings.BallStartPosition, Quaternion.identity);
+            _ball = _assetProvider.Instantiate(AssetPath.BALL, _settings.BallStartPosition);
             _ball.GetComponent<BallMovement>().Construct
             ( 
                 launchSpeed: _settings.BallLaunchSpeed,
@@ -115,7 +112,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         {
             Vector3 position = playerId == PlayerId.Player1 ? _settings.Player1PaddleStartPosition : _settings.Player2PaddleStartPosition;
             Vector3 rotation = playerId == PlayerId.Player1 ? _settings.Player1PaddleRotation : _settings.Player2PaddleRotation;
-            GameObject paddle = Object.Instantiate(_paddlePrefab, position, Quaternion.Euler(rotation));
+            GameObject paddle = _assetProvider.Instantiate(AssetPath.PADDLE, position, Quaternion.Euler(rotation));
             paddle.GetComponent<PaddleID>().PlayerId = playerId;
             
             return paddle;

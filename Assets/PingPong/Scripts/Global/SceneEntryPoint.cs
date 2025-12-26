@@ -10,11 +10,12 @@ namespace PingPong.Scripts.Global
         
         protected GameObject _sceneUI;
         
-        public virtual void Run(UIRootView uiRoot)
+        public virtual void Run(GameUI gameUI)
         {
             SceneServices.Dispose();
             _sceneUI = Instantiate(_sceneUIPrefab);
-            uiRoot.AttachSceneUI(_sceneUI.gameObject);
+            gameUI.AttachSceneUI(_sceneUI.gameObject);
+            
         }
     }
 }

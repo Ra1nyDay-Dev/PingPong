@@ -4,6 +4,6 @@ namespace PingPong.Scripts.Global
 {
     internal interface ISceneEntryPoint
     {
-        void Run(UIRootView uiRoot);
+        void Run(GameUI gameUI);
     }
 }

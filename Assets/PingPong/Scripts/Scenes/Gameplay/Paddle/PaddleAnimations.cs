@@ -1,4 +1,6 @@
 using System;
+using PingPong.Scripts.Global.Services;
+using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Scenes.Gameplay.StaticData;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -17,8 +19,11 @@ namespace PingPong.Scripts.Scenes.Gameplay.Paddle
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+
+            var settings = ProjectServices.Container
+                .Get<IStaticDataService>()
+                .GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
             
-            var settings = Resources.Load<GameplayLevelSettings>("Gameplay/StaticData/GameplayLevelSettings");
             _minBallSpeed = settings.BallLaunchSpeed;
             _maxBallSpeed = settings.BallMaxSpeed;
         }

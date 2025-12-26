@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
+using PingPong.Scripts.Global.Services.GameMusicPlayer;
 using PingPong.Scripts.Global.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,12 +12,12 @@ namespace PingPong.Scripts.Global.Services.SceneLoader
     public class SceneLoader : ISceneLoader
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly UIRootView _uiRoot;
+        private readonly GameUI _gameUI;
 
-        public SceneLoader(ICoroutineRunner coroutineRunner, UIRootView uiRoot)
+        public SceneLoader(ICoroutineRunner coroutineRunner, GameUI gameUI)
         {
             _coroutineRunner = coroutineRunner;
-            _uiRoot = uiRoot;
+            _gameUI = gameUI;
         }
 
         public void Load(string name, Action onLoaded = null) =>
@@ -24,7 +25,8 @@ namespace PingPong.Scripts.Global.Services.SceneLoader
 
         private IEnumerator LoadScene(string name, Action onLoaded = null)
         {
-            _uiRoot.ShowLoadingScreen();
+            _gameUI.ShowLoadingScreen();
+            ProjectServices.Container.Get<IGameMusicPlayer>().Stop();
             
             SceneManager.LoadScene(Data.Scenes.BOOT);
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(name);
@@ -35,10 +37,10 @@ namespace PingPong.Scripts.Global.Services.SceneLoader
             if (name != Data.Scenes.BOOT)
             {
                 var sceneEntryPoint = Object.FindFirstObjectByType<SceneEntryPoint>();
-                sceneEntryPoint.Run(_uiRoot);
+                sceneEntryPoint.Run(_gameUI);
             }
 
-            _uiRoot.HideLoadingScreen();
+            _gameUI.HideLoadingScreen();
             onLoaded?.Invoke();
         }
     }
