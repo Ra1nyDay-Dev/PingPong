@@ -12,9 +12,8 @@ using UnityEngine;
 
 namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 {
-    public class GameStartState : IGameplayState
+    public class GameStartState : IPayloadedGameplayState<GameplayEntryParams>
     {
-        private GameVersusMode _currentGameVersusMode;
         private LevelSettings _settings;
         private IGameplayStateMachine _stateMachine;
         private IInputService _player1InputService;
@@ -24,9 +23,11 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         private IScoreCounter _scoreCounter;
         private IStaticDataService _staticDataService;
         private IAssetProvider _assetProvider;
+        private GameplayEntryParams _entryParams;
 
-        public void Enter()
+        public void Enter(GameplayEntryParams entryParams)
         {
+            _entryParams = entryParams;
             GetStateDependencies();
             PrepareLevel();
             _roundTimer.Reset();
@@ -40,7 +41,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 
         private void GetStateDependencies()
         {
-            _currentGameVersusMode =  GameVersusMode.PlayerVsAI;
+            
             _staticDataService = ProjectServices.Container.Get<IStaticDataService>();
             _assetProvider = ProjectServices.Container.Get<IAssetProvider>();
             _settings = _staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
@@ -72,7 +73,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 
         private void CreatePaddles()
         {
-            switch (_currentGameVersusMode)
+            switch (_entryParams.GameVersusMode)
             {
                 case GameVersusMode.PlayerVsAI:
                 {

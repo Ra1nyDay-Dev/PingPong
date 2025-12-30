@@ -3,8 +3,8 @@ using PingPong.Scripts.Global.UI;
 
 namespace PingPong.Scripts.Global
 {
-    internal interface ISceneEntryPoint
+    public interface ISceneEntryPointWithParams<TSceneParams> : ISceneParams
     {
-        void Run(GameUI gameUI);
+        void Run(GameUI gameUI, TSceneParams sceneParams);
     }
 }

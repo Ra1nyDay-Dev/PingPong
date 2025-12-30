@@ -19,9 +19,12 @@ namespace PingPong.Scripts.Global.Services.SceneLoader
             _coroutineRunner = coroutineRunner;
             _gameUI = gameUI;
         }
-
-        public void Load(string name, Action onLoaded = null) =>
+        
+        public void Load(string name, Action onLoaded = null) => 
             _coroutineRunner.StartCoroutine(LoadScene(name, onLoaded));
+
+        public void Load<TSceneParams>(string name, TSceneParams sceneParams, Action onLoaded = null) where TSceneParams : class, ISceneParams => 
+            _coroutineRunner.StartCoroutine(LoadScene(name, sceneParams, onLoaded));
 
         private IEnumerator LoadScene(string name, Action onLoaded = null)
         {
@@ -38,6 +41,27 @@ namespace PingPong.Scripts.Global.Services.SceneLoader
             {
                 var sceneEntryPoint = Object.FindFirstObjectByType<SceneEntryPoint>();
                 sceneEntryPoint.Run(_gameUI);
+            }
+
+            _gameUI.HideLoadingScreen();
+            onLoaded?.Invoke();
+        }
+        
+        private IEnumerator LoadScene<TSceneParams>(string name, TSceneParams sceneParams, Action onLoaded = null) where TSceneParams : class, ISceneParams
+        {
+            _gameUI.ShowLoadingScreen();
+            ProjectServices.Container.Get<IGameMusicPlayer>().Stop();
+            
+            SceneManager.LoadScene(Data.Scenes.BOOT);
+            AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(name);
+
+            while (!waitNextScene.isDone)
+                yield return null;
+
+            if (name != Data.Scenes.BOOT)
+            {
+                var sceneEntryPoint = Object.FindFirstObjectByType<SceneEntryPoint<TSceneParams>>();
+                sceneEntryPoint.Run(_gameUI, sceneParams);
             }
 
             _gameUI.HideLoadingScreen();

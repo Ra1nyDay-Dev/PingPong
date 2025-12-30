@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using PingPong.Scripts.Global.UI;
 using TMPro;
 using UnityEngine;
 
 namespace PingPong.Scripts.Scenes.Gameplay.UI
 {
-    public class GameplayUI : MonoBehaviour, IGameplayUI
+    public class GameplayUI : SceneUI, IGameplayUI
     {
         [SerializeField] private TextMeshProUGUI _prepareRoundCounter;
 

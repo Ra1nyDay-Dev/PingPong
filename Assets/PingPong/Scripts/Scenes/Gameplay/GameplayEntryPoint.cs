@@ -11,11 +11,11 @@ using UnityEngine;
 
 namespace PingPong.Scripts.Scenes.Gameplay
 {
-    public class GameplayEntryPoint : SceneEntryPoint
+    public class GameplayEntryPoint : SceneEntryPoint<GameplayEntryParams>
     {
-        public override void Run(GameUI gameUI)
+        public override void Run(GameUI gameUI, GameplayEntryParams sceneParams)
         {
-            base.Run(gameUI);
+            base.Run(gameUI, sceneParams);
             RegisterSceneServices();
             StartGame();
         }
@@ -30,6 +30,6 @@ namespace PingPong.Scripts.Scenes.Gameplay
         }
 
         private void StartGame() => 
-            SceneServices.Container.Get<IGameplayStateMachine>().Enter<GameStartState>();
+            SceneServices.Container.Get<IGameplayStateMachine>().Enter<GameStartState, GameplayEntryParams>(_sceneParams);
     }
 }

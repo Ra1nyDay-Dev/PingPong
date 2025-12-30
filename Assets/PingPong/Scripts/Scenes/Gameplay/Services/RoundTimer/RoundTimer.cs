@@ -50,14 +50,14 @@ namespace PingPong.Scripts.Scenes.Gameplay.Services.RoundTimer
         
             if (timeSpan.TotalHours < 1)
             {
-                return string.Format("Round time: {0:00}:{1:00}:{2:00}", 
+                return string.Format("Время раунда: {0:00}:{1:00}:{2:00}", 
                     timeSpan.Minutes, 
                     timeSpan.Seconds, 
                     Mathf.FloorToInt(timeSpan.Milliseconds / 10f));
             }
             else
             {
-                return string.Format("Round time: {0:00}:{1:00}:{2:00}:{3:00}", 
+                return string.Format("Время раунда: {0:00}:{1:00}:{2:00}:{3:00}", 
                     timeSpan.Hours, 
                     timeSpan.Minutes, 
                     timeSpan.Seconds, 

@@ -6,6 +6,5 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine
 {
     public interface IGameplayStateMachine : IStateMachine, ISceneService
     {
-        
     }
 }
