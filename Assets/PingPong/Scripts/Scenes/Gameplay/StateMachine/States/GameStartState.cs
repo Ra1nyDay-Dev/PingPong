@@ -65,7 +65,8 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
                 launchSpeed: _settings.BallLaunchSpeed,
                 maxSpeed: _settings.BallMaxSpeed,
                 speedIncreasePerHit: _settings.BallSpeedIncreasePerHit,
-                maxLaunchAngle: _settings.BallMaxLaunchAngle
+                maxLaunchAngle: _settings.BallMaxLaunchAngle,
+                maxBounceAngle: _settings.BallMaxBounceAngle
             );
         }
 

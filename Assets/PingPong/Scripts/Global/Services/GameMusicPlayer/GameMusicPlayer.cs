@@ -32,6 +32,9 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
 
         public void PlayTrack(string trackFileName, bool repeat)
         {
+            if (string.IsNullOrEmpty(trackFileName))
+                throw new ArgumentNullException(nameof(trackFileName));
+            
             MusicTrack track = _staticDataService.GetTrack(trackFileName);
             
             Clear();
@@ -43,10 +46,13 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
 
         public void PlayPlaylist(string playlistFileName, bool shuffle, bool repeat)
         {
+            if (string.IsNullOrEmpty(playlistFileName))
+                throw new ArgumentNullException(nameof(playlistFileName));
+            
             MusicPlaylist playlist = _staticDataService.GetPlaylist(playlistFileName);
             
             if (playlist?.Tracks == null || playlist.Tracks.Length == 0) 
-                return;
+                throw new Exception($"No tracks found in playlist {playlistFileName}");
             
             Clear();
             _playlistQueue.AddRange(playlist.Tracks);
@@ -92,7 +98,7 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
             if (_playlistQueue.Count == 0)
                 return;
 
-            if (_currentIndex + 1 <= _playlistQueue.Count)
+            if (_currentIndex + 1 < _playlistQueue.Count)
             {
                 _currentIndex++;
                 PlayAudioclip();

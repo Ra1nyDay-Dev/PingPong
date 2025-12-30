@@ -15,7 +15,7 @@ namespace PingPong.Scripts.Global
 {
     public class GameEntryPoint
     {
-        private const string FIRST_SCENE = Data.Scenes.MENU;
+        private const string FIRST_SCENE = Data.Scenes.GAMEPLAY;
 
         private static GameEntryPoint _instance;
         private ISceneLoader _sceneLoader;
