@@ -25,5 +25,11 @@ namespace PingPong.Scripts.Scenes.Menu.UI.Dialogs
             var sceneParams = new GameplayEntryParams(GameVersusMode.PlayerVsPlayer);
             _sceneLoader.Load(Global.Data.Scenes.GAMEPLAY, sceneParams);
         }
+        
+        public void OnSettingsButtonClicked() => 
+            _menuUI.ShowDialog(MenuDialogsPath.SETTINGS_MENU);
+        
+        public void OnAboutButtonClicked() => 
+            _menuUI.ShowDialog(MenuDialogsPath.ABOUT_MENU);
     }
 }
