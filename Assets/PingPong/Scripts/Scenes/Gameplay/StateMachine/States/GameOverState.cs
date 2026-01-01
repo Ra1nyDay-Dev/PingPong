@@ -1,31 +1,32 @@
-﻿using PingPong.Scripts.Global.Data;
-using PingPong.Scripts.Global.Services;
-using PingPong.Scripts.Global.Services.StaticData;
+﻿using PingPong.Scripts.Scenes.Gameplay.Ball;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
-using PingPong.Scripts.Scenes.Gameplay.StaticData;
-using UnityEngine;
+using PingPong.Scripts.Scenes.Gameplay.Services.GameplayFactory;
 
 namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 {
     public class GameOverState : IGameplayState
     {
+        private readonly IGameplayFactory _gameplayFactory;
+
+        public GameOverState(IGameplayFactory gameplayFactory)
+        {
+            _gameplayFactory = gameplayFactory;
+        }
+
         public void Enter()
         {
-            var paddles = GameObject.FindGameObjectsWithTag("Paddle");
-            var staticDataService = ProjectServices.Container.Get<IStaticDataService>();
-            var settings = staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
-            
-            foreach (GameObject paddle in paddles)
-            {
-                paddle.GetComponent<PaddleMovement>().enabled = false;
-                paddle.transform.position = paddle.GetComponent<PaddleID>().PlayerId == PlayerId.Player1 
-                    ? settings.Player1PaddleStartPosition 
-                    : settings.Player2PaddleStartPosition;
-            }
+            DisableMovement();
         }
 
         public void Exit()
         {
+        }
+        
+        private void DisableMovement()
+        {
+            _gameplayFactory.Player1Paddle.GetComponent<PaddleMovement>().enabled = false;
+            _gameplayFactory.Player2Paddle.GetComponent<PaddleMovement>().enabled = false;
+            _gameplayFactory.Ball.GetComponent<BallMovement>().StopBall();
         }
     }
 }

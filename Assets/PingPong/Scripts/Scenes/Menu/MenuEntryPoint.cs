@@ -13,7 +13,9 @@ namespace PingPong.Scripts.Scenes.Menu
         {
             base.Run(gameUI);
             RegisterSceneServices();
+
             SceneServices.Container.Get<IMenuUI>().ShowDialog(MenuDialogsPath.MAIN_MENU);
+            
             ProjectServices.Container.Get<IGameMusicPlayer>()
                 .PlayPlaylist(PlaylistsNames.MENU, false, true);
         }

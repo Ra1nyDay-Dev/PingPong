@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using PingPong.Scripts.Global.AssetManagement;
-using PingPong.Scripts.Global.Data;
-using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
 using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Scenes.Gameplay.Ball;
 using PingPong.Scripts.Scenes.Gameplay.Paddle;
+using PingPong.Scripts.Scenes.Gameplay.Services.GameplayFactory;
 using PingPong.Scripts.Scenes.Gameplay.Services.LightController;
 using PingPong.Scripts.Scenes.Gameplay.Services.RoundTimer;
 using PingPong.Scripts.Scenes.Gameplay.Services.ScoreCounter;
@@ -17,22 +15,37 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 {
     public class RoundStartState : IGameplayState
     {
-        private GameObject _ball;
-        private GameObject[] _paddles;
-        private LevelSettings _settings;
-        private IGameplayUI _gameplayUI;
-        private ICoroutineRunner _coroutineRunner;
-        private IGameplayStateMachine _stateMachine;
-        private IScoreCounter _scoreCounter;
-        private IRoundTimer _roundTimer;
-        private ILightController _lightController;
-        private IStaticDataService _staticDataService;
+        private readonly IGameplayStateMachine _stateMachine;
+        private readonly IGameplayFactory _gameplayFactory;
+        private readonly IRoundTimer _roundTimer;
+        private readonly ILightController _lightController;
+        private readonly IScoreCounter _scoreCounter;
+        private readonly IStaticDataService _staticDataService;
+        private readonly IGameplayUI _gameplayUI;
+        private readonly ICoroutineRunner _coroutineRunner;
+        
+        private readonly LevelSettings _settings;
+
+        public RoundStartState(IGameplayStateMachine stateMachine, IGameplayFactory gameplayFactory, IStaticDataService staticDataService, 
+            IScoreCounter scoreCounter, IRoundTimer roundTimer, ILightController lightController, 
+            IGameplayUI gameplayUI, ICoroutineRunner coroutineRunner)
+        {
+            _stateMachine = stateMachine;
+            _gameplayFactory = gameplayFactory;
+            _roundTimer = roundTimer;
+            _lightController =  lightController;
+            _scoreCounter = scoreCounter;
+            _staticDataService = staticDataService;
+            _gameplayUI =  gameplayUI;
+            _coroutineRunner = coroutineRunner;
+            
+            _settings = _staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
+        }
 
         public void Enter()
         {
-            GetStateDependencies();
-            ResetPositions();
-            DisableObjects();
+            _gameplayFactory.ResetLevelObjectsPositions();
+            BlockLevelObjects();
             _roundTimer.Reset();
             _lightController.ResetLights();
             StartRoundCountdown();
@@ -40,43 +53,23 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
 
         public void Exit()
         {
-            EnableObjects();
+            UnblockLevelObjects();
             _roundTimer.StartTimer();
-            _ball.GetComponent<BallMovement>().LaunchBall();
+            _gameplayFactory.Ball.GetComponent<BallMovement>().LaunchBall();
         }
 
-        private void GetStateDependencies()
+        private void UnblockLevelObjects()
         {
-            _staticDataService = ProjectServices.Container.Get<IStaticDataService>();
-            _paddles = GameObject.FindGameObjectsWithTag("Paddle");
-            _ball = GameObject.FindWithTag("Ball");
-            _settings = _staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
-            _gameplayUI = SceneServices.Container.Get<IGameplayUI>();
-            _coroutineRunner = ProjectServices.Container.Get<ICoroutineRunner>();
-            _stateMachine = SceneServices.Container.Get<IGameplayStateMachine>();
-            _scoreCounter = SceneServices.Container.Get<IScoreCounter>(); 
-            _roundTimer = SceneServices.Container.Get<IRoundTimer>();
-            _lightController = SceneServices.Container.Get<ILightController>();
+            _gameplayFactory.Ball.SetActive(true);
+            _gameplayFactory.Player1Paddle.GetComponent<PaddleMovement>().enabled = true;
+            _gameplayFactory.Player2Paddle.GetComponent<PaddleMovement>().enabled = true;
         }
 
-        private void ResetPositions()
+        private void BlockLevelObjects()
         {
-            _ball.transform.position = _settings.BallStartPosition;
-
-            foreach (GameObject paddle in _paddles)
-            {
-                paddle.transform.position = paddle.GetComponent<PaddleID>().PlayerId == PlayerId.Player1 
-                    ? _settings.Player1PaddleStartPosition 
-                    : _settings.Player2PaddleStartPosition;
-            }
-        }
-
-        private void DisableObjects()
-        {
-            _ball.SetActive(false);
-
-            foreach (var paddle in _paddles)
-                paddle.GetComponent<PaddleMovement>().enabled = false;
+            _gameplayFactory.Ball.SetActive(false);
+            _gameplayFactory.Player1Paddle.GetComponent<PaddleMovement>().enabled = false;
+            _gameplayFactory.Player2Paddle.GetComponent<PaddleMovement>().enabled = false;
         }
 
         private void StartRoundCountdown()
@@ -92,14 +85,6 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine.States
         {
             yield return new WaitForSeconds(time);
             _stateMachine.Enter<GameLoopState>();
-        }
-
-        private void EnableObjects()
-        {
-            _ball.SetActive(true);
-
-            foreach (var paddle in _paddles)
-                paddle.GetComponent<PaddleMovement>().enabled = true;
         }
     }
 }
