@@ -63,11 +63,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.UI
                 _gameplayUIAudio.PlayCountdownLastTick();
         }
 
-        public void OnPauseButtonClicked()
-        {
-            var gameplayStateMachine = SceneServices.Container.Get<IGameplayStateMachine>();
-            if (!(gameplayStateMachine.ActiveState is GameOverState))
-                ShowDialog<PauseDialog>();
-        }
+        public void OnPauseButtonClicked() => 
+            ShowDialog<PauseDialog>();
     }
 }
