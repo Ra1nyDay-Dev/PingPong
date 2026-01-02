@@ -1,6 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.UI;
+using PingPong.Scripts.Scenes.Gameplay.StateMachine;
+using PingPong.Scripts.Scenes.Gameplay.StateMachine.States;
+using PingPong.Scripts.Scenes.Gameplay.UI.Dialogs;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 namespace PingPong.Scripts.Scenes.Gameplay.UI
@@ -8,14 +15,22 @@ namespace PingPong.Scripts.Scenes.Gameplay.UI
     public class GameplayUI : SceneUI, IGameplayUI
     {
         [SerializeField] private TextMeshProUGUI _prepareRoundCounter;
-
+ 
         private const float COUNTDOWN_TICKS = 3;
 
         private GameplayUIAudio _gameplayUIAudio;
         private float _countdownTicksLeft;
 
-        private void Awake() => 
+        private void Awake()
+        {
+            _sceneDialogsPrefabs = new Dictionary<Type, string>()
+            {
+                {typeof(PlayAgainDialog), "Gameplay/UI/Dialogs/PlayAgainDialog"},
+                {typeof(PauseDialog), "Gameplay/UI/Dialogs/PauseDialog"},
+            };
+            
             _gameplayUIAudio = GetComponent<GameplayUIAudio>();
+        }
 
         public void StartRoundCountdown(float time) => 
             StartCoroutine(RoundCountdown(time));
@@ -46,6 +61,13 @@ namespace PingPong.Scripts.Scenes.Gameplay.UI
                 _gameplayUIAudio.PlayCountdownTick();
             else 
                 _gameplayUIAudio.PlayCountdownLastTick();
+        }
+
+        public void OnPauseButtonClicked()
+        {
+            var gameplayStateMachine = SceneServices.Container.Get<IGameplayStateMachine>();
+            if (!(gameplayStateMachine.ActiveState is GameOverState))
+                ShowDialog<PauseDialog>();
         }
     }
 }

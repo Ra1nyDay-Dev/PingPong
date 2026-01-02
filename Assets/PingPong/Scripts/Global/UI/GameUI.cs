@@ -14,12 +14,7 @@ namespace PingPong.Scripts.Global.UI
         {
             ClearSceneUI();
             sceneUI.transform.SetParent(_sceneUI, false);
-            var rt = sceneUI.GetComponent<RectTransform>();
-            rt.anchorMin = Vector2.zero;
-            rt.anchorMax = Vector2.one;
-            rt.offsetMin = Vector2.zero;
-            rt.offsetMax = Vector2.zero;
-            sceneUI.transform.localScale = Vector3.one;
+            FixSceneUiTransform(sceneUI);
         }
 
         private void ClearSceneUI()
@@ -29,6 +24,16 @@ namespace PingPong.Scripts.Global.UI
             {
                 Destroy(_sceneUI.GetChild(i).gameObject);
             }
+        }
+
+        private void FixSceneUiTransform(GameObject sceneUI)
+        {
+            var rt = sceneUI.GetComponent<RectTransform>();
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+            sceneUI.transform.localScale = Vector3.one;
         }
     }
 }

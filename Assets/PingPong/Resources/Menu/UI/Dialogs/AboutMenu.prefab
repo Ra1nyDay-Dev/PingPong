@@ -619,9 +619,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=#9956F1>\u0420\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A:</color>
-    \u0420\u043E\u043C\u0430\u043D \u0429\u0443\u043F\u0430\u043A\u043E\u0432\n\n<color=#9956F1>\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B:</color>\n<color=#9956F1>-
-    Email: </color>dante967@mail.ru\n<color=#9956F1>- VK:</color> vk.com/romansch\n<color=#9956F1>-
+  m_text: "<color=#DD416A>\u0420\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A:</color>
+    \u0420\u043E\u043C\u0430\u043D \u0429\u0443\u043F\u0430\u043A\u043E\u0432\n\n<color=#DD416A>\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B:</color>\n<color=#DD416A>-
+    Email: </color>dante967@mail.ru\n<color=#DD416A>- VK:</color> vk.com/romansch\n<color=#DD416A>-
     Github: </color>github.com/Ra1nyDay-Dev\n\n\n<size=85%>\u0420\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0430\u043D\u043E
     \u0432 \u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0445
     \u0446\u0435\u043B\u044F\u0445 \u043D\u0430 C# Unity \u0432 2026 \u0433\u043E\u0434\u0443.\n"

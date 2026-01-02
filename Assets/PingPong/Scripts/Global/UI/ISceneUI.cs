@@ -1,9 +1,13 @@
 ﻿using PingPong.Scripts.Global.Services;
+using UnityEngine;
 
 namespace PingPong.Scripts.Global.UI
 {
     public interface ISceneUI : ISceneService
     {
-        void ShowDialog(string dialogPath);
+        TDialog ShowDialog<TDialog>() where TDialog : SceneDialog;
+        TDialog SwitchScreen<TDialog>() where TDialog : SceneDialog;
+        public void HideDialog<TDialog>() where TDialog : SceneDialog;
+        public void HideAllDialogs();
     }
 }

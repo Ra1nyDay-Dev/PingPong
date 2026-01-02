@@ -6,7 +6,7 @@ namespace PingPong.Scripts.Global.StateMachine
     public abstract class GameStateMachine : IStateMachine
     {
         protected Dictionary<Type, IExitableState> _states = new();
-        protected IExitableState _activeState;
+        public IExitableState ActiveState { get; protected set; }
 
         public void Enter<TState>() where TState : class, IState
         {
@@ -22,9 +22,9 @@ namespace PingPong.Scripts.Global.StateMachine
 
         private TState ChangeState<TState>() where TState : class, IExitableState
         {
-            _activeState?.Exit();
+            ActiveState?.Exit();
             TState state = GetState<TState>();
-            _activeState = state;
+            ActiveState = state;
             
             return state;
         }

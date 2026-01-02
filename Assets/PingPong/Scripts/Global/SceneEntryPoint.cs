@@ -24,10 +24,8 @@ namespace PingPong.Scripts.Global
         
         public virtual void Run(GameUI gameUI, TSceneParams sceneParams)
         {
-            SceneServices.Dispose();
-            _sceneUI = Instantiate(_sceneUIPrefab);
+            base.Run(gameUI);
             _sceneParams = sceneParams;
-            gameUI.AttachSceneUI(_sceneUI.gameObject);
         }
     }
 }

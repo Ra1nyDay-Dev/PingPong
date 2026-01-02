@@ -26,7 +26,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.StateMachine
                 [typeof(GameLoopState)] = new GameLoopState(),
                 [typeof(RoundEndState)] = new RoundEndState(this, gameplayFactory, staticDataService, scoreCounter,
                     roundTimer, lightController, coroutineRunner),
-                [typeof(GameOverState)] = new GameOverState(gameplayFactory),
+                [typeof(GameOverState)] = new GameOverState(gameplayFactory, gameplayUI),
             };
         }
     }

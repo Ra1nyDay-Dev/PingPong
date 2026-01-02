@@ -1,24 +1,24 @@
 using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.SceneLoader;
+using PingPong.Scripts.Global.UI;
 using PingPong.Scripts.Scenes.Gameplay;
+using PingPong.Scripts.Scenes.Gameplay.StateMachine;
 using UnityEngine;
 
 namespace PingPong.Scripts.Scenes.Menu.UI.Dialogs
 {
-    public class MainMenuDialog : MonoBehaviour
+    public class MainMenuScreen : SceneDialog
     {
-        private IMenuUI _menuUI;
         private ISceneLoader _sceneLoader;
 
         private void Awake()
         {
-            _menuUI = SceneServices.Container.Get<IMenuUI>();
             _sceneLoader = ProjectServices.Container.Get<ISceneLoader>();
         }
 
         public void OnSingleplayerButtonClicked() => 
-            _menuUI.ShowDialog(MenuDialogsPath.SINGLEPLAYER_MENU);
+            _sceneUI.SwitchScreen<SingleplayerMenuScreen>();
         
         public void OnMultiplayerButtonClicked()
         {
@@ -27,9 +27,9 @@ namespace PingPong.Scripts.Scenes.Menu.UI.Dialogs
         }
         
         public void OnSettingsButtonClicked() => 
-            _menuUI.ShowDialog(MenuDialogsPath.SETTINGS_MENU);
+            _sceneUI.SwitchScreen<SettingsMenuScreen>();
         
         public void OnAboutButtonClicked() => 
-            _menuUI.ShowDialog(MenuDialogsPath.ABOUT_MENU);
+            _sceneUI.SwitchScreen<AboutMenuScreen>();
     }
 }

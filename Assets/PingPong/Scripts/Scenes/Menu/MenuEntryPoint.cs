@@ -4,6 +4,7 @@ using PingPong.Scripts.Global.Services.GameMusicPlayer;
 using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Global.UI;
 using PingPong.Scripts.Scenes.Menu.UI;
+using PingPong.Scripts.Scenes.Menu.UI.Dialogs;
 
 namespace PingPong.Scripts.Scenes.Menu
 {
@@ -14,7 +15,7 @@ namespace PingPong.Scripts.Scenes.Menu
             base.Run(gameUI);
             RegisterSceneServices();
 
-            SceneServices.Container.Get<IMenuUI>().ShowDialog(MenuDialogsPath.MAIN_MENU);
+            SceneServices.Container.Get<IMenuUI>().SwitchScreen<MainMenuScreen>();
             
             ProjectServices.Container.Get<IGameMusicPlayer>()
                 .PlayPlaylist(PlaylistsNames.MENU, false, true);
