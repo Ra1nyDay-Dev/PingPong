@@ -17,13 +17,13 @@ MonoBehaviour:
   Player2PaddleStartPosition: {x: 8, y: 0, z: -1}
   Player2PaddleRotation: {x: 0, y: 0, z: 90}
   BallStartPosition: {x: 0, y: 0, z: -1}
+  LevelBoundsY: 4.7
   PaddleSpeed: 15
   BallLaunchSpeed: 7
   BallMaxSpeed: 20
   BallSpeedIncreasePerHit: 2
   BallMaxLaunchAngle: 45
   BallMaxBounceAngle: 45
-  LevelBoundsY: 4.7
   FirstRoundCountdownTime: 3
   RoundCountdownTime: 1.5
   ScoreToWin: 5

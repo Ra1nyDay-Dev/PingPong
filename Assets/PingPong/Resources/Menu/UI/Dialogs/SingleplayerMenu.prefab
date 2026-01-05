@@ -257,7 +257,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2459109175921313392}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2271890033601635551}
+        m_TargetAssemblyTypeName: PingPong.Scripts.Scenes.Menu.UI.Dialogs.SingleplayerMenuScreen,
+          Assembly-CSharp
+        m_MethodName: OnImpossibleButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3469965897294802086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1183,7 +1196,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 143482671707195122}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2271890033601635551}
+        m_TargetAssemblyTypeName: PingPong.Scripts.Scenes.Menu.UI.Dialogs.SingleplayerMenuScreen,
+          Assembly-CSharp
+        m_MethodName: OnMediumButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2069871588620510848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,7 +1402,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8533071651296818949}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2271890033601635551}
+        m_TargetAssemblyTypeName: PingPong.Scripts.Scenes.Menu.UI.Dialogs.SingleplayerMenuScreen,
+          Assembly-CSharp
+        m_MethodName: OnHardButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5705123585074765982
 MonoBehaviour:
   m_ObjectHideFlags: 0

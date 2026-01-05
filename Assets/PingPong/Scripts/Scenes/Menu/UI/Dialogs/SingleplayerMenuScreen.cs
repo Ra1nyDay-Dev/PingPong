@@ -15,7 +15,22 @@ namespace PingPong.Scripts.Scenes.Menu.UI.Dialogs
 
         public void OnEasyButtonClicked()
         {
-            var sceneParams = new GameplayEntryParams(GameVersusMode.PlayerVsAI);
+            var sceneParams = new GameplayEntryParams(GameVersusMode.PlayerVsAI, AIDifficulty.Easy);
+            _sceneLoader.Load(Global.Data.Scenes.GAMEPLAY, sceneParams);
+        }
+        public void OnMediumButtonClicked()
+        {
+            var sceneParams = new GameplayEntryParams(GameVersusMode.PlayerVsAI, AIDifficulty.Medium);
+            _sceneLoader.Load(Global.Data.Scenes.GAMEPLAY, sceneParams);
+        }
+        public void OnHardButtonClicked()
+        {
+            var sceneParams = new GameplayEntryParams(GameVersusMode.PlayerVsAI, AIDifficulty.Hard);
+            _sceneLoader.Load(Global.Data.Scenes.GAMEPLAY, sceneParams);
+        }
+        public void OnImpossibleButtonClicked()
+        {
+            var sceneParams = new GameplayEntryParams(GameVersusMode.PlayerVsAI, AIDifficulty.Impossible);
             _sceneLoader.Load(Global.Data.Scenes.GAMEPLAY, sceneParams);
         }
 

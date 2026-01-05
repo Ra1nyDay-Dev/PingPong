@@ -21,16 +21,16 @@ namespace PingPong.Scripts.Scenes.Gameplay.Services.GameplayFactory
         private readonly LevelSettings _settings;
         private readonly IInputService _player1InputService;
         private readonly IInputService _player2InputService;
-        private readonly GameVersusMode _versusMode;
+        private readonly GameplayEntryParams _sceneParams;
 
         public GameplayFactory(IAssetProvider assetProvider, IStaticDataService staticDataService
-            , IInputService player1InputService, IInputService player2InputService, GameVersusMode versusMode)
+            , IInputService player1InputService, IInputService player2InputService, GameplayEntryParams sceneParams)
         {
            _assetProvider  = assetProvider;
            _player1InputService = player1InputService;
            _player2InputService = player2InputService;
            _staticDataService =  staticDataService;
-           _versusMode = versusMode;
+           _sceneParams = sceneParams;
            
            _settings = _staticDataService.GetSettings("Gameplay", SettingsNames.GAMEPLAY_SETTINGS);
         }
@@ -56,10 +56,10 @@ namespace PingPong.Scripts.Scenes.Gameplay.Services.GameplayFactory
         
         public void CreatePaddles()
         {
-            if (!Ball && (_versusMode == GameVersusMode.PlayerVsAI ||  _versusMode == GameVersusMode.AIvsAI))
+            if (!Ball && (_sceneParams.GameVersusMode == GameVersusMode.PlayerVsAI ||  _sceneParams.GameVersusMode == GameVersusMode.AIvsAI))
                 throw new Exception("Ball not created. AI Paddles need it to track");
                 
-            switch (_versusMode)
+            switch (_sceneParams.GameVersusMode)
             {
                 case GameVersusMode.PlayerVsAI:
                 {
@@ -109,8 +109,19 @@ namespace PingPong.Scripts.Scenes.Gameplay.Services.GameplayFactory
         private GameObject CreateAIPaddle(PlayerId playerId, GameObject ball)
         {
             var paddle = CreatePaddle(playerId);
-            var paddleControlls = new AIPaddleControlls(Ball, paddle, _settings.LevelBoundsY);
-            paddle.GetComponent<PaddleMovement>().Construct(_settings.PaddleSpeed, _settings.LevelBoundsY, paddleControlls);
+            var difficulty = _staticDataService.GetAIConfig(_sceneParams.Difficulty);
+            var paddleControlls = new AIPaddleControlls(
+                Ball, 
+                paddle, 
+                _settings.LevelBoundsY,
+                difficulty.ReactionDelay,
+                difficulty.PredictionError,
+                difficulty.CalculateWithBounces
+            );
+            paddle.GetComponent<PaddleMovement>().Construct(
+                _settings.PaddleSpeed * difficulty.SpeedMultiplier, 
+                _settings.LevelBoundsY
+                , paddleControlls);
 
             return paddle;
         }

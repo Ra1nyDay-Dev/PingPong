@@ -50,7 +50,7 @@ namespace PingPong.Scripts.Scenes.Gameplay
             SceneServices.Container.Register<IScoreCounter>(_sceneUI.GetComponentInChildren<ScoreCounter>());
             SceneServices.Container.Register<ILightController>(GameObject.FindFirstObjectByType<LightController>());
             SceneServices.Container.Register<IGameplayFactory>(new GameplayFactory(_assetProvider, _staticDataService, 
-                _player1InputService,_player2InputService, _sceneParams.GameVersusMode));
+                _player1InputService,_player2InputService, _sceneParams));
             RegisterGameplayStateMachine();
         }
 
