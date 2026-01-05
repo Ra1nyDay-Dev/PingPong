@@ -4,20 +4,20 @@ namespace PingPong.Scripts.Scenes.Gameplay.Paddle
 {
     public class PaddleMovement : MonoBehaviour
     {
-        private float _speed;
-        private float _maxY;
+        public float Speed { get; private set; }
+        
+        private float _levelBounds;
         private IPaddleControlls _paddleControlls;
         
         private Rigidbody2D _rigidbody;
+        private float _paddleHalfHeight;
         
         private float _movementVector;
-        private float _paddleHalfHeight;
-        private bool _isMovementBlocked;
 
-        public void Construct(float speed, float maxY, IPaddleControlls paddleControlls)
+        public void Construct(float speed, float levelBounds, IPaddleControlls paddleControlls)
         {
-            _speed = speed;
-            _maxY = maxY;
+            Speed = speed;
+            _levelBounds = levelBounds;
             _paddleControlls = paddleControlls;
         }
         
@@ -32,8 +32,8 @@ namespace PingPong.Scripts.Scenes.Gameplay.Paddle
         
         private void FixedUpdate()
         {
-            var newPosition = _rigidbody.position + Vector2.up * (_movementVector * _speed * Time.fixedDeltaTime);
-            newPosition.y = Mathf.Clamp(newPosition.y, -_maxY + _paddleHalfHeight, _maxY - _paddleHalfHeight);
+            var newPosition = _rigidbody.position + Vector2.up * (_movementVector * Speed * Time.fixedDeltaTime);
+            newPosition.y = Mathf.Clamp(newPosition.y, -_levelBounds + _paddleHalfHeight, _levelBounds - _paddleHalfHeight);
             _rigidbody.MovePosition(newPosition);
         }
     }

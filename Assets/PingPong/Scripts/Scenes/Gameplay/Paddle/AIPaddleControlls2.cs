@@ -2,7 +2,7 @@
 
 namespace PingPong.Scripts.Scenes.Gameplay.Paddle
 {
-    public class AIPaddleControlls : IPaddleControlls
+    public class AIPaddleControlls2 : IPaddleControlls
      {
          public float MoveVectorY => CalculateNextMove();
 
@@ -21,7 +21,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.Paddle
          private float _attackPoint;
          private bool _newBounce = true;
 
-         public AIPaddleControlls(GameObject ball, GameObject paddle, float levelBounds)
+         public AIPaddleControlls2(GameObject ball, GameObject paddle, float levelBounds)
          {
              _ball = ball;
              _paddle = paddle;
@@ -46,7 +46,6 @@ namespace PingPong.Scripts.Scenes.Gameplay.Paddle
                 return 0;
             
             float predictedBallPositionY = PredictBallYWithBounces(_ball.transform.position.y, _ballRigidbody.linearVelocityY, timeToPaddle);
-            // float predictedBallPositionY = _ball.transform.position.y + _ballRigidbody.linearVelocityY * timeToPaddle;
             
             predictedBallPositionY = Mathf.Clamp(predictedBallPositionY,-_levelBounds + _paddleHalfHeight,_levelBounds - _paddleHalfHeight);
 

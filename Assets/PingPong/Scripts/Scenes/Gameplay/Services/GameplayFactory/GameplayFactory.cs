@@ -109,7 +109,7 @@ namespace PingPong.Scripts.Scenes.Gameplay.Services.GameplayFactory
         private GameObject CreateAIPaddle(PlayerId playerId, GameObject ball)
         {
             var paddle = CreatePaddle(playerId);
-            var paddleControlls = new AIPaddleControlls(Ball, paddle.transform, _settings.LevelBoundsY);
+            var paddleControlls = new AIPaddleControlls(Ball, paddle, _settings.LevelBoundsY);
             paddle.GetComponent<PaddleMovement>().Construct(_settings.PaddleSpeed, _settings.LevelBoundsY, paddleControlls);
 
             return paddle;
