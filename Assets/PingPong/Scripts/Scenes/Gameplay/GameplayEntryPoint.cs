@@ -3,6 +3,7 @@ using PingPong.Scripts.Global.AssetManagement;
 using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
+using PingPong.Scripts.Global.Services.GameMusicPlayer;
 using PingPong.Scripts.Global.Services.Input;
 using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Global.UI;
@@ -32,6 +33,9 @@ namespace PingPong.Scripts.Scenes.Gameplay
             RegisterSceneServices();
             PrepareLevel();
             StartGame();
+            
+            ProjectServices.Container.Get<IGameMusicPlayer>()
+                .PlayPlaylist(PlaylistsNames.GAMEPLAY, true, true);
         }
 
         private void GetProjectDependencies()

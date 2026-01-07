@@ -53,6 +53,7 @@ namespace PingPong.Scripts.Global
             RegisterCoroutineRunner();
             ProjectServices.Container.Register<IAssetProvider>(_assetProvider);
             ProjectServices.Container.Register<IStaticDataService>(new StaticDataService());
+            ProjectServices.Container.Register<IGameUI>(_gameUI);
             RegisterGameMusicService();
             RegisterSceneLoader();
             ProjectServices.Container.Register<IInputService>($"{PlayerId.Player1}", new UnityPlayerInput(PlayerId.Player1));

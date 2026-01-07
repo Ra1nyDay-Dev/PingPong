@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services.StaticData;
+using PingPong.Scripts.Global.UI;
 using UnityEngine;
 
 namespace PingPong.Scripts.Global.Services.GameMusicPlayer
@@ -14,13 +15,14 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
 
         private AudioSource _audioSource;
         
-        private List<MusicTrack> _playlistQueue = new();
+        private readonly List<MusicTrack> _playlistQueue = new();
         private int _currentIndex = -1;
 
         private bool _isPaused;
         private bool _repeatPlaylist;
         private Coroutine _trackEndCoroutine;
         private IStaticDataService _staticDataService;
+        private bool _wasPlayingBeforeFocusLoss = false;
 
         public event Action<MusicTrack> TrackStartPlay;
 
@@ -28,6 +30,31 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
         {
             _audioSource = GetComponent<AudioSource>();
             _staticDataService = ProjectServices.Container.Get<IStaticDataService>();
+        }
+        
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            HandleFocusChange(hasFocus);
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            HandleFocusChange(!pauseStatus);
+        }
+
+        private void HandleFocusChange(bool hasFocus)
+        {
+            if (hasFocus)
+            {
+                if (_wasPlayingBeforeFocusLoss) 
+                    Resume();
+            }
+            else
+            {
+                _wasPlayingBeforeFocusLoss = _audioSource.isPlaying && !_isPaused;
+                if (_wasPlayingBeforeFocusLoss) 
+                    Pause();
+            }
         }
 
         public void PlayTrack(string trackFileName, bool repeat)
@@ -76,12 +103,9 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
 
         public void Pause()
         {
-            if (_audioSource.isPlaying && !_isPaused)
-            {
-                _audioSource.Pause();
-                StopTrackEndCheck();
-                _isPaused = true;
-            }
+            _audioSource.Pause();
+            StopTrackEndCheck();
+            _isPaused = true;
         }
 
         public void Stop()
@@ -110,8 +134,6 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
                     _currentIndex = -1;
                     PlayNext();
                 }
-
-                Stop();
             }
         }
 
@@ -132,9 +154,11 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
                     _currentIndex = _playlistQueue.Count - 1;
                     PlayAudioclip();
                 }
-
-                _currentIndex = -1;
-                PlayNext();
+                else
+                {
+                    _currentIndex = -1;
+                    PlayNext();
+                }
             }
         }
 
@@ -156,6 +180,7 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
             CurrentTrack = _playlistQueue[_currentIndex];
             _audioSource.clip = CurrentTrack.Clip;
             _audioSource.Play();
+            ProjectServices.Container.Get<IGameUI>().ShowMusicPopUp(CurrentTrack); // toDo: переписать на события
             TrackStartPlay?.Invoke(CurrentTrack);
             StartTrackEndCheck();
         }
