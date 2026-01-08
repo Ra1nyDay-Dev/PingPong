@@ -159,13 +159,26 @@ MonoBehaviour:
   m_FillRect: {fileID: 3905812156075301688}
   m_HandleRect: {fileID: 3924649620131632857}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.5
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4397083219658429563}
+        m_TargetAssemblyTypeName: PingPong.Scripts.Scenes.Gameplay.UI.Dialogs.PauseDialog,
+          Assembly-CSharp
+        m_MethodName: SetMusicVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8325834636481608153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,13 +283,26 @@ MonoBehaviour:
   m_FillRect: {fileID: 1604429266663327130}
   m_HandleRect: {fileID: 2061531323775902223}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.5
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4397083219658429563}
+        m_TargetAssemblyTypeName: PingPong.Scripts.Scenes.Gameplay.UI.Dialogs.PauseDialog,
+          Assembly-CSharp
+        m_MethodName: SetSFXVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2107419968950498198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,6 +881,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973b32b85afb44e6aaa7eb49c0e64320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PingPong.Scripts.Scenes.Gameplay.UI.Dialogs.PauseDialog
+  _audioMixer: {fileID: 24100000, guid: be9ba56195892b64ba5ad60f65af5a98, type: 2}
+  _musicSlider: {fileID: 2411086314562108133}
+  _sfxSlider: {fileID: 1312552250116711228}
 --- !u!1 &2339597603619654325
 GameObject:
   m_ObjectHideFlags: 0

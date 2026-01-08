@@ -3,7 +3,9 @@
     public class AssetPath
     {
         public const string GAME_UI = "Game/UI/GameUI";
+       
         public const string GAME_MUSIC_PLAYER = "Game/Audio/GameMusicPlayer";
+        public const string GAME_AUDIO_MIXER = "Game/Audio/Mixers/GameAudioMixer";
         
         public const string MENU_UI = "Menu/UI/MenuUI";
         

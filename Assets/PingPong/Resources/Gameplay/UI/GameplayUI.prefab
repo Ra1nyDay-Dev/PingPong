@@ -531,7 +531,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!82 &1683447911973369461
 AudioSource:
   m_ObjectHideFlags: 0
@@ -541,7 +541,7 @@ AudioSource:
   m_GameObject: {fileID: 3994263674099629143}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3035741120661041584, guid: be9ba56195892b64ba5ad60f65af5a98, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0

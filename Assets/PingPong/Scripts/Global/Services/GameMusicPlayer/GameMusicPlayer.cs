@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PingPong.Scripts.Global.Data;
+using PingPong.Scripts.Global.Services.GameAudioMixer;
 using PingPong.Scripts.Global.Services.StaticData;
 using PingPong.Scripts.Global.UI;
 using UnityEngine;
@@ -163,7 +164,7 @@ namespace PingPong.Scripts.Global.Services.GameMusicPlayer
         }
 
         public void SetVolume(float volume) => 
-            _audioSource.volume = Mathf.Clamp01(volume);
+            ProjectServices.Container.Get<IGameAudioMixer>().SetMusicVolume(volume);
 
         public void Clear()
         {

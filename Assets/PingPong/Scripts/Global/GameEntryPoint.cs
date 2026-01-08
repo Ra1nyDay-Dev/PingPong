@@ -2,6 +2,7 @@ using PingPong.Scripts.Global.AssetManagement;
 using PingPong.Scripts.Global.Data;
 using PingPong.Scripts.Global.Services;
 using PingPong.Scripts.Global.Services.CoroutineRunner;
+using PingPong.Scripts.Global.Services.GameAudioMixer;
 using PingPong.Scripts.Global.Services.GameMusicPlayer;
 using PingPong.Scripts.Global.Services.Input;
 using PingPong.Scripts.Global.Services.SceneLoader;
@@ -54,7 +55,8 @@ namespace PingPong.Scripts.Global
             ProjectServices.Container.Register<IAssetProvider>(_assetProvider);
             ProjectServices.Container.Register<IStaticDataService>(new StaticDataService());
             ProjectServices.Container.Register<IGameUI>(_gameUI);
-            RegisterGameMusicService();
+            RegisterGameMusicPlayer();
+            RegisterGameAudioMixer();
             RegisterSceneLoader();
             ProjectServices.Container.Register<IInputService>($"{PlayerId.Player1}", new UnityPlayerInput(PlayerId.Player1));
             ProjectServices.Container.Register<IInputService>($"{PlayerId.Player2}", new UnityPlayerInput(PlayerId.Player2));
@@ -73,11 +75,18 @@ namespace PingPong.Scripts.Global
             ProjectServices.Container.Register<ISceneLoader>(_sceneLoader);
         }
 
-        private void RegisterGameMusicService()
+        private void RegisterGameMusicPlayer()
         {
             var gameMusicPlayer = _assetProvider.Instantiate(AssetPath.GAME_MUSIC_PLAYER).GetComponent<GameMusicPlayer>();
             Object.DontDestroyOnLoad(gameMusicPlayer.gameObject);
             ProjectServices.Container.Register<IGameMusicPlayer>(gameMusicPlayer);
+        }
+
+        private void RegisterGameAudioMixer()
+        {
+            var gameAudioMixer = _assetProvider.Instantiate(AssetPath.GAME_AUDIO_MIXER).GetComponent<GameAudioMixer>();
+            Object.DontDestroyOnLoad(gameAudioMixer.gameObject);
+            ProjectServices.Container.Register<IGameAudioMixer>(gameAudioMixer);
         }
     }
 }

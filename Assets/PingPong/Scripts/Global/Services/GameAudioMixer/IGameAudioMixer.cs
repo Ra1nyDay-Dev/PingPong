@@ -1,10 +1,10 @@
 ﻿namespace PingPong.Scripts.Global.Services.GameAudioMixer
 {
-    public interface IGameAudioMixer
+    public interface IGameAudioMixer : IProjectService
     {
-        void GetMusicVolume();
+        float GetMusicVolume();
         void SetMusicVolume(float volume);
-        void GetSFXVolume();
+        float GetSFXVolume();
         void SetSFXVolume(float volume);
     }
 }
